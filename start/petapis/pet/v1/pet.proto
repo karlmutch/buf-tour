@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+// gRPC based API for a pet store
 package pet.v1;
 
 option go_package = "github.com/bufbuild/buf-tour/petstore/gen/proto/go/pet/v1;petv1";

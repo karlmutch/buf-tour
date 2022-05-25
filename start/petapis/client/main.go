@@ -2,25 +2,17 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 
-	// This import path is based on the name declaration in the go.mod,
-	// and the gen/proto/go output location in the buf.gen.yaml.
 	petv1 "go.buf.build/grpc/go/karlmutch/petapis/pet/v1"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	if err := run(); err != nil {
-		log.Fatal(err)
-	}
-}
-func run() error {
 	connectTo := "127.0.0.1:8080"
 	conn, err := grpc.Dial(connectTo, grpc.WithBlock(), grpc.WithInsecure())
 	if err != nil {
-		return fmt.Errorf("failed to connect to PetStoreService on %s: %w", connectTo, err)
+		log.Fatalf("failed to connect to PetStoreService on %s due to %s", connectTo, err.Error())
 	}
 	log.Println("Connected to", connectTo)
 
@@ -29,9 +21,6 @@ func run() error {
 		PetType: petv1.PetType_PET_TYPE_SNAKE,
 		Name:    "Ekans",
 	}); err != nil {
-		return fmt.Errorf("failed to PutPet: %w", err)
+		log.Fatalf("failed to PutPet %s", err.Error())
 	}
-
-	log.Println("Successfully PutPet")
-	return nil
 }
